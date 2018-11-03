@@ -1,0 +1,48 @@
+:host {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 50px;
+    float: right;
+}
+
+.item-grid {
+    flex-wrap: wrap;
+    margin: -0.5em;
+}
+
+.item-grid > * {
+    flex: 1 0 5em;
+    margin: 0.5em;
+
+    min-width: 20em;
+    max-width: 37.5em;
+}
+
+.item {
+    margin-top: 10px;
+}
+
+.item-card {
+    width: 300px;
+}
+
+img {
+    max-width: 20px;
+    max-height: 20px;
+}
+.price {
+    color: rgba(0,0,0,.54);
+    float: right;
+}
+.mat-button {
+    background: cadetblue;
+    float: right;
+}
+
+#empty-cart {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #EEE;
+    border-radius: 10px;
+    width: 350px;
+}

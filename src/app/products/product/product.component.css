@@ -1,0 +1,39 @@
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.5em;
+}
+
+.product-grid > * {
+    flex: 1 0 5em;
+    margin: 0.5em;
+
+    min-width: 20em;
+    max-width: 37.5em;
+}
+
+.product {
+    margin-bottom: 2em;
+}
+
+.buttons {
+    margin-top: auto;
+}
+
+.product-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-button {
+    background: cadetblue;
+}
+
+.mat-button[disabled] {
+    background:gray;
+}
+.sold {
+    color: red;
+    padding-left: 10px;
+}

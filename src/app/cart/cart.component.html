@@ -1,0 +1,13 @@
+<h4>Cart</h4>
+<ul *ngIf="items.length > 0; else emptyCart" class="u-listReset item-grid">
+  <li *ngFor="let item of items" class="item">
+      <mat-card class="item-card">
+        {{item.name}}
+        <strong>( {{ item.price }} $ )</strong>
+        <a mat-button (click)="onDelete(item.id)"> Delete </a>
+      </mat-card>
+  </li>
+</ul>
+<ng-template #emptyCart>
+  <p id="empty-cart">CART IS EMPTY</p>
+</ng-template>
