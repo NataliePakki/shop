@@ -11,16 +11,9 @@ export interface Product {
 }
 
 export class ProductModel implements Product {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    category: Category;
-    isAvailable: boolean;
-    imageUrl: string;
 
-    constructor(id: string, name: string, description: string = '', price: number = 0,
-            category: Category = Category.Computers, imageUrl: string = '', isAvailable: boolean = true) {
+    constructor(public id: string, public name: string, public description: string = '', public price: number = 0,
+            public category: Category = Category.Computers, public imageUrl: string = '', public isAvailable: boolean = true) {
         this.id = id;
         this.name = name;
         this.description = description;
