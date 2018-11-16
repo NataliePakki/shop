@@ -1,29 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatListModule, MatInputModule, MatToolbarModule, MatButtonModule, MatCardModule, MatTabsModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { ProductComponent } from './products/product/product.component';
-import { ProductsComponent } from './products/products.component';
-import { CartComponent } from './cart/cart.component';
+import { CartComponent } from '@cart/cart.component';
+import { CartItemComponent } from '@cart/cart-item/cart-item.component';
+import { ProductsComponent } from '@products/products.component';
+import { ProductComponent } from '@products/product/product.component';
+import { CoreModule } from '@core/core.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent,
+    CartComponent,
+    CartItemComponent,
     ProductsComponent,
-    CartComponent
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
-    MatListModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatInputModule,
-    BrowserAnimationsModule
+
+    SharedModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

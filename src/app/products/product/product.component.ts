@@ -15,7 +15,8 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {}
 
-  onBuy(id: string) {
-    this.bought.emit(id);
+  onBuy(event: any) {
+    event && event.preventDefault();
+    this.bought.emit(this.product.id);
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 
-import { ProductModel, Product } from '../models/product.model';
-import { Category } from '@shared/category.enum';
+import { ProductModel, Product } from '@products/models/product.model';
+import { Category } from '@products/models/category.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -17,26 +17,26 @@ export class ProductsService {
         'https://upload.wikimedia.org/wikipedia/commons/4/40/Nexus_6.png'));
   }
 
-  getAll() {
+  getAll(): Product[] {
     return this.products;
   }
 
-  get(id: string) {
+  get(id: string): Product {
     return this.products.find((product) => product.id === id);
   }
 
-  add(product: Product) {
+  add(product: Product): void {
     this.products.push(product);
   }
 
-  toggleIsAvailable(id: string) {
+  toggleIsAvailable(id: string): void {
     const index = this.products.findIndex((product => product.id === id));
     if (index > -1) {
       this.products[index].isAvailable = !this.products[index].isAvailable;
     }
   }
 
-  remove(id: string) {
+  remove(id: string): void {
     this.products = this.products.filter((product) => product.id !== id);
   }
 }

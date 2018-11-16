@@ -1,0 +1,7 @@
+<li class="item">
+  <mat-card appHightlight class="item-card">
+    {{item.name}}
+    <strong>( {{item.price}} $ )</strong>
+    <a mat-button (click)="onDelete($event)"> Delete </a>
+  </mat-card>
+</li>

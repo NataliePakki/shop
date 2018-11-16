@@ -1,5 +1,3 @@
-import { Category } from '@shared/category.enum';
-
 export interface Cart {
     id: string;
     name: string;
@@ -7,7 +5,6 @@ export interface Cart {
 }
 
 export class CartModel implements Cart {
-
     constructor(public id: string, public name: string, public price: number = 0) {
         this.id = id;
         this.name = name;

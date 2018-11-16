@@ -1,5 +1,5 @@
 <li class="product">
-  <mat-card class="product-card">
+  <mat-card appHightlight [ngStyle]="{'filter': product.isAvailable === true ? 'opacity(1)' : 'opacity(.2)' }" class="product-card">
     <mat-card-header>
       <mat-card-title>{{ product.name }}</mat-card-title>
       <mat-card-subtitle><strong>Price: {{ product.price }} $</strong></mat-card-subtitle>
@@ -7,9 +7,8 @@
     <img *ngIf="product.imageUrl" mat-card-image [src]="product.imageUrl">
     <mat-card-content>{{ product.description }}</mat-card-content>
     <mat-card-actions class="buttons">
-      <a mat-button (click)="onBuy(product.id)" [disabled]="!product.isAvailable">Buy</a>
+      <a mat-button (click)="onBuy($event)" [disabled]="!product.isAvailable">Buy</a>
       <span class="sold" *ngIf="!product.isAvailable">SOLD OUT</span>
     </mat-card-actions>
   </mat-card>
 </li>
-
