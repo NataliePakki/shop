@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from '@shared/shared.module';
 import { HeaderComponent } from './header/header.component';
-import { SharedModule } from 'app/shared/shared.module';
+import { CONSTANTS, Generator, GeneratorService } from './services';
 
 @NgModule({
   imports: [
@@ -11,6 +12,10 @@ import { SharedModule } from 'app/shared/shared.module';
     SharedModule
   ],
   declarations: [HeaderComponent],
-  exports: [HeaderComponent]
+  exports: [HeaderComponent],
+  providers: [
+    { provide: CONSTANTS, useValue: { App: 'ShopApplication', Ver: '1.0' } },
+    { provide: Generator, useFactory: GeneratorService(10) },
+  ],
 })
 export class CoreModule { }

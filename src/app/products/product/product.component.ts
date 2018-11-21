@@ -10,6 +10,7 @@ import { Product } from '../models/product.model';
 export class ProductComponent implements OnInit {
   @Input() product: Product;
   @Output() bought = new EventEmitter();
+  private count = 1;
 
   constructor() { }
 
@@ -17,6 +18,19 @@ export class ProductComponent implements OnInit {
 
   onBuy(event: any) {
     event && event.preventDefault();
-    this.bought.emit(this.product.id);
+    this.bought.emit({ id: this.product.id, count: this.count });
+    this.count = 1;
+  }
+
+  onIncrease() {
+    this.count++;
+  }
+
+  onDecrease() {
+    this.count--;
+  }
+
+  getCount() {
+    return this.count;
   }
 }

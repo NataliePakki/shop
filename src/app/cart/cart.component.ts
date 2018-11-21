@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { CartService, ProductsService } from '@core/services';
-import { Cart, CartModel } from './models/cart.model';
+import { Cart } from './models/cart.model';
 
 @Component({
   selector: 'app-cart',
@@ -9,26 +9,30 @@ import { Cart, CartModel } from './models/cart.model';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, OnDestroy {
-  items: Cart[] = [];
+  constructor(public cartService: CartService, private productsService: ProductsService) { }
 
-  constructor(private cartService: CartService, private productsService: ProductsService) { }
+  ngOnInit() {}
 
-  ngOnInit() {
-    this.init();
-  }
-
-  ngOnDestroy() {
-    this.items = [];
-  }
+  ngOnDestroy() {}
 
   onDelete(id: string) {
+    const item = this.cartService.get(id);
+    const count = item.count;
     this.cartService.remove(id);
-    this.productsService.toggleIsAvailable(id);
-    this.init();
+    this.productsService.increaseCount(id, count);
   }
 
-  init() {
-    this.items = this.cartService.getAll();
+  onAdjusted(item: Cart) {
+    this.cartService.adjustCount(item.id, item.count);
+    this.productsService.adjustCount(item.id, -item.count);
+  }
+
+  clear(event: any) {
+    event && event.preventDefault();
+    this.cartService.getAll().forEach(item => {
+      this.productsService.adjustCount(item.id, item.count);
+      this.cartService.adjustCount(item.id, -item.count);
+    });
   }
 
   getCount(): number {
@@ -38,10 +42,4 @@ export class CartComponent implements OnInit, OnDestroy {
   getSubtotal(): number {
     return this.cartService.getSubtotal();
   }
-
-  add(id: string, name: string, price: number) {
-    this.cartService.add(new CartModel(id, name, price));
-    this.init();
-  }
-
 }

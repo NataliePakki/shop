@@ -10,32 +10,19 @@ import { CartModel } from '@cart/models/cart.model';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  products: Product[] = [];
 
-  constructor(private productService: ProductsService, private cartService: CartService) {}
+  constructor(public productService: ProductsService, private cartService: CartService) {}
 
-  ngOnInit() {
-    this.init();
-  }
+  ngOnInit() { }
 
-  ngOnDestroy() {
-    this.products = [];
-  }
+  ngOnDestroy() { }
 
-  onBuy(id: string) {
-    const pr = this.productService.get(id);
-    if (pr && pr.isAvailable) {
-      this.productService.toggleIsAvailable(id);
-      this.cartService.add(new CartModel(pr.id, pr.name, pr.price));
-      this.init();
+  onBuy(value: any) {
+    const pr = this.productService.get(value.id);
+
+    if (pr && pr.count > 0) {
+      this.cartService.add(new CartModel(pr.id, pr.name, pr.price, value.count, pr.count));
+      this.productService.decreaseCount(value.id, value.count);
     }
-  }
-
-  toggleIsAvailable(id: string) {
-    this.productService.toggleIsAvailable(id);
-    this.init();
-  }
-  init() {
-    this.products = this.productService.getAll();
   }
 }

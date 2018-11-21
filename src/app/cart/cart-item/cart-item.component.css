@@ -3,7 +3,7 @@
 }
 
 .item-card {
-    width: 300px;
+    width: 350px;
 }
 
 .price {
@@ -13,4 +13,8 @@
 .mat-button {
     background: cadetblue;
     float: right;
+}
+
+.count {
+    margin-left: 5px;
 }

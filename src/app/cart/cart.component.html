@@ -1,9 +1,10 @@
 <h4>Cart</h4>
-<div *ngIf="items.length > 0; else emptyCart" >
+<div *ngIf="cartService.getCount() > 0; else emptyCart" >
     Items count: {{getCount()}} |
-    Subtotal: {{getSubtotal()}} $
+    Subtotal: {{getSubtotal()}} $ |
+    <a href="#" class="clear" (click)="clear($event)">Clear</a>
   <ul class="u-listReset item-grid">
-    <app-cart-item *ngFor="let item of items" [item]="item" (deleted)="onDelete($event)"></app-cart-item>
+    <app-cart-item *ngFor="let item of cartService.getAll()" [item]="item" (deleted)="onDelete($event)" (adjusted)="onAdjusted($event)"></app-cart-item>
   </ul>
 </div>
 <ng-template #emptyCart>

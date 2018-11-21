@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>ContactUs Demo Component</h1>
+  <div >App: {{constants.App}}</div>
+  <div>App Version: {{constants.Ver}}</div>
+  <div>Random: {{randonNumber}}</div>
+  <hr/>
+  Local Storage Service:
+  <div>
+    <div>
+      <div>KEY</div>
+      <input name="key" [(ngModel)]="newItem.key"/>
+    </div>
+    <div>
+      <div>VALUE</div>
+      <input name="value" [(ngModel)]="newItem.value"/>
+    </div>
+    <button class="btn btn-default" (click)="add()">Add</button>
+    </div>
+    <div *ngFor="let item of items">KEY: {{item.key}} | VALUE: {{item.value}} <a href="#" (click)="remove(item.key)">remove</a></div>
+    Border Directive
+    <button appBorder="cadetblue">Click to add border</button>
+</div>
+
+
