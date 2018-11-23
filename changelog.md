@@ -1,22 +1,7 @@
-- modify CartService:
-* add new functionality:
-    * add several products
-    * remove several products
-    * adjust count of products
-    * remove all products
-    * recalc count and subtotal
-- implement LocalStorageService:
-    * setItem(key, value): void
-    * getItem(key): any
-    * removeItem(key): void
-- implement ConfigOptionsService
-    * setConfig(value: any): void
-    * getConfig(): any
-- implement ConstantsService :{ App: "TaskManager", Ver: "1.0" } and register it to module using 'useValue'
-- implement GeneratorService, which generate random n-string (a-z, A-Z, 0-9), use 'useFactory' to set n
-- register all services in CoreModule
-- create ContactUs demo-component and inject all services
-- implement BorderDirective using ElementRef/Renderer2
-
-
-
+- use CurrencyPipe in CartComponent, CartItemComponent and ProductComponent template for price
+- use DatePipe in ProductComponent template for last Updated fieild
+- use UppercasePipe in ProductComponent template for category name
+- modify ProductsService:
+    * getAll(): Promise<Product[]>
+- use AsyncPipe
+- implement OrderByPipe and register it to SharedModule

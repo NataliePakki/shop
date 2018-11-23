@@ -45,6 +45,25 @@ img {
     text-decoration: underline;
 }
 
+.orderBy {
+    font-size: 90%;
+    color: gray;
+    cursor: pointer;
+}
+.orderBy a:hover {
+    text-decoration: underline;
+}
+.orderBy a.active {
+    color: cadetblue;
+    text-decoration: underline;
+}
+.orderBy .asc {
+    transform: rotate(180deg);
+}
+
+.orderBy .sort:hover{
+    color: cadetblue;
+}
 
 #empty-cart {
     margin: 20px 0;

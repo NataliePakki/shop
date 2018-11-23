@@ -5,6 +5,7 @@ import { MatMenuModule, MatTabsModule, MatCardModule,
 import { HightlightDirective } from './hightlight.directive';
 import { CounterComponent } from './counter/counter.component';
 import { BorderDirective } from './border.directive';
+import { OrderByPipe } from './order-by.pipe';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { BorderDirective } from './border.directive';
   declarations: [
     HightlightDirective,
     CounterComponent,
-    BorderDirective
+    BorderDirective,
+    OrderByPipe
   ],
   exports: [
     MatMenuModule,
@@ -26,6 +28,7 @@ import { BorderDirective } from './border.directive';
     MatIconModule,
     HightlightDirective,
     BorderDirective,
+    OrderByPipe,
     CounterComponent,
   ]
 })

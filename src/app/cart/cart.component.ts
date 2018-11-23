@@ -9,6 +9,9 @@ import { Cart } from './models/cart.model';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, OnDestroy {
+  public orderByValues = [ 'count', 'price', 'name' ];
+  public currOrderBy = 'name';
+  public desc = true;
   constructor(public cartService: CartService, private productsService: ProductsService) { }
 
   ngOnInit() {}
@@ -27,12 +30,23 @@ export class CartComponent implements OnInit, OnDestroy {
     this.productsService.adjustCount(item.id, -item.count);
   }
 
+  onOrderByChanged(orderByValue: string) {
+    if (this.currOrderBy === orderByValue) {
+      this.desc = !this.desc;
+    } else {
+      this.currOrderBy = orderByValue;
+    }
+  }
+  onOrderChanged() {
+    this.desc = !this.desc;
+  }
+
   clear(event: any) {
     event && event.preventDefault();
     this.cartService.getAll().forEach(item => {
       this.productsService.adjustCount(item.id, item.count);
-      this.cartService.adjustCount(item.id, -item.count);
     });
+    this.cartService.clear();
   }
 
   getCount(): number {

@@ -1,10 +1,14 @@
 <h4>Cart</h4>
 <div *ngIf="cartService.getCount() > 0; else emptyCart" >
     Items count: {{getCount()}} |
-    Subtotal: {{getSubtotal()}} $ |
+    Subtotal: {{getSubtotal() | currency }}  |
     <a href="#" class="clear" (click)="clear($event)">Clear</a>
+    <div class="orderBy">Order by:
+      <mat-icon class="sort" [ngClass]="{asc:!desc}" (click)="onOrderChanged()">sort</mat-icon>
+      <span *ngFor="let orderByValue of orderByValues"><a [ngClass]="{active:orderByValue===currOrderBy}" (click)="onOrderByChanged(orderByValue)">{{orderByValue | titlecase}} | </a></span>
+    </div>
   <ul class="u-listReset item-grid">
-    <app-cart-item *ngFor="let item of cartService.getAll()" [item]="item" (deleted)="onDelete($event)" (adjusted)="onAdjusted($event)"></app-cart-item>
+    <app-cart-item *ngFor="let item of cartService.getAll() | orderBy:currOrderBy:desc" [item]="item" (deleted)="onDelete($event)" (adjusted)="onAdjusted($event)"></app-cart-item>
   </ul>
 </div>
 <ng-template #emptyCart>

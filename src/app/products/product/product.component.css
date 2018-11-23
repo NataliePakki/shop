@@ -24,3 +24,14 @@
     color: red;
     padding-left: 10px;
 }
+
+.category {
+    position: fixed;
+    right: 20px;
+    color: cadetblue;
+}
+
+.updatedDate {
+    font-size: 10px;
+    filter: opacity(.5);
+}

@@ -61,17 +61,26 @@ export class CartService implements OnDestroy {
     if (itemIndex > -1) {
       const item = this.items[itemIndex];
       item.count += count;
+      item.maxCount -= count;
       if (item.count <= 0) {
-        this.items = this.items.filter((i) =>  i.id !== id );
+        this.items.splice(itemIndex, 1);
       }
       this.recalc(item.price, count);
     }
   }
+  clear(): void {
+    this.items = [];
+    this.count = 0;
+    this.subtotal = 0;
+  }
 
   remove(id: string): void {
-    const item = this.get(id);
-    this.items = this.items.filter((i) =>  i.id !== id );
-    this.recalc(item.price, -item.count);
+    const i = this.items.findIndex(p => p.id === id);
+
+    if (i > -1) {
+      this.recalc(this.items[i].price, -this.items[i].count);
+      this.items.splice(i, 1);
+    }
   }
 
   private recalc(price: number, count: number) {

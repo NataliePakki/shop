@@ -4,32 +4,34 @@ import { v4 as uuid } from 'uuid';
 import { ProductModel, Product } from '@products/models/product.model';
 import { Category } from '@products/models/category.enum';
 
+const products: Product[] = [
+  new ProductModel(uuid(), 'Nexus 7', '7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G', 300, Category.Phones, 2,
+      'https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png'),
+  new ProductModel(uuid(), 'Nexus 6', '5.96 IPS (1440 x 2560), Android, Memory 3 GB,  32 GB, 3G', 350,
+      Category.Phones, 2,
+     'https://upload.wikimedia.org/wikipedia/commons/4/40/Nexus_6.png')
+];
+const productsPromise = Promise.resolve(products);
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private products: Product[] = [];
 
-  constructor() {
-    this.products.push(new ProductModel(uuid(), 'Nexus 7', '7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G', 300, Category.Phones, 2,
-        'https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png'));
-    this.products.push(new ProductModel(uuid(), 'Nexus 6', '5.96 IPS (1440 x 2560), Android, Memory 3 GB,  32 GB, 3G', 300,
-         Category.Phones, 2,
-        'https://upload.wikimedia.org/wikipedia/commons/4/40/Nexus_6.png'));
-  }
+  constructor() {}
 
-  getAll(): Product[] {
-    return this.products;
+  getAll(): Promise<Product[]> {
+    return productsPromise;
   }
 
   get(id: string): Product {
-    return this.products.find((product) => product.id === id);
+    return products.find((product) => product.id === id);
   }
 
   add(product: Product, count?: number): void {
     count = count || product.count || 1;
     product.count = count;
-    this.products.push(product);
+    products.push(product);
   }
 
   decreaseCount(id: string, count?: number): void {
@@ -41,13 +43,18 @@ export class ProductsService {
   }
 
   adjustCount(id: string, count: number) {
-    const index = this.products.findIndex((product => product.id === id));
+    const index = products.findIndex((product => product.id === id));
     if (index > -1) {
-      this.products[index].count += count;
+      products[index].lastUpdated = new Date();
+      products[index].count += count;
     }
   }
 
   remove(id: string): void {
-    this.products = this.products.filter((product) => product.id !== id);
+    const i = products.findIndex(p => p.id === id);
+
+    if (i > -1) {
+      products.splice(i, 1);
+    }
   }
 }
