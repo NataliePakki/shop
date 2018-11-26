@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule, MatTabsModule, MatCardModule,
-      MatButtonModule, MatToolbarModule, MatInputModule, MatListModule, MatIconModule } from '@angular/material';
 import { HightlightDirective } from './hightlight.directive';
 import { CounterComponent } from './counter/counter.component';
 import { BorderDirective } from './border.directive';
+import { MatAngularModule } from './mat-angular.module';
 
 @NgModule({
   imports: [
@@ -16,14 +15,7 @@ import { BorderDirective } from './border.directive';
     BorderDirective
   ],
   exports: [
-    MatMenuModule,
-    MatListModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatTabsModule,
-    MatIconModule,
+    MatAngularModule,
     HightlightDirective,
     BorderDirective,
     CounterComponent,
