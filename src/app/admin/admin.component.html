@@ -1,0 +1,15 @@
+<div class="admin">
+  <h3>Admin</h3>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="./" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="./products"  routerLinkActive="active">Manage Products</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="./orders"  routerLinkActive="active">Manage Orders</a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
+</div>

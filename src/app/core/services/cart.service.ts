@@ -1,15 +1,25 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
+
 import { Cart } from '@cart/models/cart.model';
+import { LocalStorageService } from './local-storage.service';
+import { CoreModule } from '@core/core.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: CoreModule
 })
-export class CartService implements OnDestroy {
+export class CartService implements OnInit, OnDestroy {
   private items: Cart[] = [];
   private subtotal = 0;
   private count = 0;
+  private submitted = false;
 
-  constructor() { }
+  constructor(
+    private localStorage: LocalStorageService
+  ) { }
+
+  ngOnInit() {
+    this.items = this.localStorage.getItem('cart').value;
+  }
 
   ngOnDestroy() {
     this.items = [];
@@ -36,6 +46,7 @@ export class CartService implements OnDestroy {
       this.items.push(item);
     }
     this.recalc(item.price, item.count);
+    this.localStorage.setItem('cart', this.items);
   }
 
   getSubtotal(): number {
@@ -44,6 +55,14 @@ export class CartService implements OnDestroy {
 
   getCount(): number {
     return this.count;
+  }
+
+  toggleSubmit(): void {
+    this.submitted = !this.submitted;
+  }
+
+  isSubmitted(): boolean {
+    return this.submitted;
   }
 
   decreaseCount(id: string, count?: number): void {
@@ -72,6 +91,7 @@ export class CartService implements OnDestroy {
     this.items = [];
     this.count = 0;
     this.subtotal = 0;
+    this.localStorage.setItem('cart', this.items);
   }
 
   remove(id: string): void {
@@ -81,6 +101,7 @@ export class CartService implements OnDestroy {
       this.recalc(this.items[i].price, -this.items[i].count);
       this.items.splice(i, 1);
     }
+    this.localStorage.setItem('cart', this.items);
   }
 
   private recalc(price: number, count: number) {

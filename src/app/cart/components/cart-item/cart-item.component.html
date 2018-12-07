@@ -1,0 +1,8 @@
+<li class="item">
+  <mat-card appHightlight class="item-card">
+    <span class="name">{{ item.name }}</span>
+    <app-counter [count]="getCount()" [maxCount]="item.maxCount" (decrease)="onDecrease()" (increase)="onIncrease()"></app-counter>
+    <span class="delete" (click)="onDelete($event)"> X </span>
+    <strong> {{ item.price * item.count | currency }} </strong>
+  </mat-card>
+</li>

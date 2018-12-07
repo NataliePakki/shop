@@ -1,0 +1,14 @@
+.review {
+    margin-bottom: 1em;
+}
+.review-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.createdDate {
+    opacity: .5;
+    font-size: 10px;
+    position: absolute;
+    right: 10px;
+}

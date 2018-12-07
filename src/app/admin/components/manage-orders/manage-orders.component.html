@@ -1,0 +1,39 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Address</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Products</th>
+
+      <th scope="col">Subtotal</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of (ordersService.getAll() | async)">
+        <td>{{ order.shipmentDate.name }}</td>
+        <td>{{ order.shipmentDate.address }}</td>
+        <td>{{ order.shipmentDate.phone }}</td>
+        <td>{{ order.shipmentDate.email }}</td>
+        <td>
+          <ul *ngFor="let product of order.products">
+              <li>
+                  {{ product.name }} ({{ product.count}}) - {{ ( product.price * product.count ) | currency }}
+
+              </li>
+          </ul>
+        </td>
+        <td>{{ order.subtotal | currency }}</td>
+        <td>
+            <mat-form-field>
+                <mat-select [(value)]="order.state" (selectionChange)="onOrderStatusChanged(order.id, order.state)">
+                  <mat-option *ngFor="let st of orderStates" [value]="st">{{ st }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </td>
+      </tr>
+
+  </tbody>
+</table>

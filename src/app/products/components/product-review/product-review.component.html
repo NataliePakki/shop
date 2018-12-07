@@ -1,0 +1,11 @@
+<li class="review">
+  <mat-card appHightlight class="review-card">
+    <mat-card-header>
+      <mat-card-title>{{ review.author }}</mat-card-title>
+      <div class="createdDate">{{ review.createdDate | date:'dd/MMM/yyyy hh:mm:ss' }}</div>
+
+      <!-- <mat-card-subtitle><strong>Price: {{ product.price | currency }} </strong></mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>{{ review.text }}</mat-card-content>
+  </mat-card>
+</li>

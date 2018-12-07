@@ -1,0 +1,7 @@
+<div class="order" *ngIf="order" >
+  <ul class="u-listReset item-grid">
+    <app-order-item *ngFor="let item of order.products" [item]="item"></app-order-item>
+  </ul>
+  <div class="subtotal">Subtotal: {{ order.subtotal | currency }}</div>
+</div>
+

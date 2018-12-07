@@ -1,0 +1,27 @@
+<button mat-button [routerLink]="['/add']" class="add">Add Product</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col">Count</th>
+      <th scope="col">Category</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of (productsService.getAll() | async)">
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.count }}</td>
+        <td>{{ product.category }}</td>
+        <td>
+          <button mat-button [routerLink]="['/edit', product.id]">Edit</button>
+          <button mat-button (click)="onDeleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+
+  </tbody>
+</table>

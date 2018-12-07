@@ -1,0 +1,12 @@
+.panel {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-button {
+  margin-right: 10px;
+}

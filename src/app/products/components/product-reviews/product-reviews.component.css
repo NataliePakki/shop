@@ -1,0 +1,28 @@
+:host {
+    position: fixed;
+    right: 30px;
+    display: inline-block;
+    width: 35%;
+}
+
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.5em;
+    width: 65%;
+}
+
+.reviews-grid > * {
+    flex: 1 0 5em;
+    margin: 0.5em;
+
+    min-width: 20em;
+    max-width: 37.5em;
+}
+
+.close {
+    opacity: 0.2;
+}
+.close:hover {
+    opacity: 1;
+}

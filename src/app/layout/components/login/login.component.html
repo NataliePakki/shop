@@ -1,0 +1,8 @@
+<div class="login">
+  <h2>LOGIN</h2>
+  <p>State: {{message}}</p>
+  <p>
+    <button mat-button (click)="onLogin()"  *ngIf="!authService.isLoggedIn">Login</button>
+    <button mat-button (click)="onLogout()" *ngIf="authService.isLoggedIn">Logout</button>
+  </p>
+</div>

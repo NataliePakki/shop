@@ -1,0 +1,17 @@
+.item {
+  margin-top: 10px;
+}
+
+.price {
+  color: rgba(0,0,0,.54);
+  float: right;
+}
+
+.count {
+  margin-left: 5px;
+}
+
+.name {
+  display: inline-block;
+  min-width: 60%;
+}

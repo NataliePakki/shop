@@ -1,0 +1,30 @@
+.item {
+    margin-top: 10px;
+}
+
+.price {
+    color: rgba(0,0,0,.54);
+    float: right;
+}
+
+.count {
+    margin-left: 5px;
+}
+
+.delete {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: gray;
+  color: white;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.name {
+  display: inline-block;
+  min-width: 60%;
+}

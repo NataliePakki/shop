@@ -1,0 +1,20 @@
+:host {
+    display: inline-block;
+    width: 50%;
+    margin-left: 50px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin: -0.5em;
+}
+
+.product-grid > * {
+    flex: 1 0 5em;
+    margin: 0.5em;
+
+    min-width: 10em;
+    max-width: 37.5em;
+}

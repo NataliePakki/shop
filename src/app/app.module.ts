@@ -1,32 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { CartComponent } from '@cart/cart.component';
-import { CartItemComponent } from '@cart/cart-item/cart-item.component';
-import { ProductsComponent } from '@products/products.component';
-import { ProductComponent } from '@products/product/product.component';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-
+import { LayoutModule } from './layout/layout.module';
+import { ProductsModule } from '@products/products.module';
+import { AppRoutingModule } from './app-routing.module';
+import { CartModule } from '@cart/cart.module';
+import { OrderModule } from '@order/order.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CartComponent,
-    CartItemComponent,
-    ProductsComponent,
-    ProductComponent,
-    ContactUsComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
+    RouterModule,
 
     SharedModule,
-    CoreModule
+    LayoutModule,
+    CoreModule,
+    ProductsModule,
+    CartModule,
+    OrderModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

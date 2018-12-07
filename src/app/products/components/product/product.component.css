@@ -1,0 +1,43 @@
+
+.product {
+    margin-bottom: 2em;
+}
+
+.buttons {
+    margin-top: auto;
+}
+
+.product-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-button[disabled] {
+    background:gray;
+}
+.sold {
+    color: red;
+    padding-left: 10px;
+}
+
+.category {
+    position: fixed;
+    right: 20px;
+    color: cadetblue;
+}
+
+.updatedDate {
+    font-size: 10px;
+    filter: opacity(.5);
+}
+
+.reviews {
+    cursor: pointer;
+    font-size: 15px;
+    filter: opacity(.5);
+    text-decoration: underline;
+}
+.reviews:hover {
+    color: #0056b3;
+}

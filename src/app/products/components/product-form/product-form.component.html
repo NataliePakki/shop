@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="pannel-title">
+            Product
+        </h4>
+    </div>
+    <div class="panel-body">
+        <form *ngIf="product" (ngSubmit)="onSaveProduct()" id="product-form" #form="ngForm">
+            <mat-form-field>
+              <input matInput placeholder="Name" name="name" [(ngModel)]="product.name">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Decscription</mat-label>
+              <textarea matInput
+                        cdkTextareaAutosize
+                        name="description"
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="2"
+                        cdkAutosizeMaxRows="5"
+                        [(ngModel)]="product.description"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Count" name="count" [(ngModel)]="product.count">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Price ($)" name="price" [(ngModel)]="product.price">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Category</mat-label>
+              <mat-select [(value)]="product.category" >
+                <mat-option *ngFor="let ct of categories" [value]="ct">{{ ct }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          <button mat-button
+              type="submit"
+              form="product-form"
+              [disabled]="form.invalid" >Save
+          </button>
+          <button mat-button
+              type="button"
+              (click)="onGoBack()">Back
+          </button>
+        </form>
+    </div>
+  </div>

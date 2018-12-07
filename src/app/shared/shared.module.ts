@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule, MatTabsModule, MatCardModule,
-      MatButtonModule, MatToolbarModule, MatInputModule, MatListModule, MatIconModule } from '@angular/material';
+
+import { MatAngularModule } from './mat-angular.module';
+
 import { HightlightDirective } from './hightlight.directive';
 import { CounterComponent } from './counter/counter.component';
 import { BorderDirective } from './border.directive';
@@ -18,14 +19,7 @@ import { OrderByPipe } from './order-by.pipe';
     OrderByPipe
   ],
   exports: [
-    MatMenuModule,
-    MatListModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatTabsModule,
-    MatIconModule,
+    MatAngularModule,
     HightlightDirective,
     BorderDirective,
     OrderByPipe,

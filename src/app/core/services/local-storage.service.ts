@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 
+import { CoreModule } from '@core/core.module';
+
 export class Item {
   constructor(public key, public value) {}
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: CoreModule
 })
 export class LocalStorageService {
 
