@@ -11,18 +11,15 @@ import { ProductsReviewsService } from '@core/services';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
+  @Input() reviewsCount: number;
+
   @Output() bought = new EventEmitter();
+  @Output() reviewOpened = new EventEmitter();
   private count = 1;
-  reviewsLength = 0;
 
-  constructor(
-    private router: Router,
-    private reviewsService: ProductsReviewsService
-  ) { }
+  constructor( ) { }
 
-  ngOnInit() {
-    this.reviewsLength = this.reviewsService.get(this.product.id).length;
-  }
+  ngOnInit() {}
 
   onBuy(event: any) {
     event && event.preventDefault();
@@ -32,9 +29,7 @@ export class ProductComponent implements OnInit {
 
   onOpenReviews($event: any) {
     $event.preventDefault();
-    if (this.reviewsService.get(this.product.id).length > 0) {
-      this.router.navigate([{ outlets: { reviews: [ this.product.id ] } }]);
-    }
+    this.reviewOpened.emit(this.product.id);
   }
 
   onIncrease() {

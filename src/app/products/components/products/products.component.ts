@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ProductsService, CartService } from '@core/services';
+import { ProductsService, CartService, ProductsReviewsService } from '@core/services';
 import { CartModel } from '@cart/models/cart.model';
 
 @Component({
@@ -13,6 +13,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     public productService: ProductsService,
+    public reviewsService: ProductsReviewsService,
     private cartService: CartService,
     private router: Router) {}
 
@@ -29,6 +30,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.productService.decreaseCount(value.id, value.count);
       }
     });
+  }
+
+  onReviewOpened(id: string) {
+    if (this.reviewsService.get(id).length > 0) {
+      this.router.navigate([{ outlets: { reviews: [ id ] } }]);
+    }
   }
 
 }

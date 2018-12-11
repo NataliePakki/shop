@@ -1,4 +1,4 @@
 <h4>Products</h4>
 <ul class="u-listReset product-grid">
-  <app-product *ngFor="let product of productService.getAll() | async" [product]="product" (bought)="onBuy($event)"></app-product>
+  <app-product *ngFor="let product of productService.getAll() | async" [product]="product" [reviewsCount]="reviewsService.get(product.id).length" (reviewOpened)="onReviewOpened($event)" (bought)="onBuy($event)"></app-product>
 </ul>

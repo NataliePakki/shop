@@ -7,7 +7,7 @@
     </mat-card-header>
     <img *ngIf="product.imageUrl" mat-card-image [src]="product.imageUrl">
     <mat-card-content>{{ product.description }}</mat-card-content>
-    <div (click)="onOpenReviews($event)" class="reviews">Reviews ({{ reviewsLength }})</div>
+    <div (click)="onOpenReviews($event)" class="reviews">Reviews ({{ reviewsCount }})</div>
     <div class="updatedDate">Last updated: {{ product.lastUpdated | date:'dd/MMM/yyyy hh:mm:ss' }}</div>
     <mat-card-actions class="buttons">
         <app-counter [count]="getCount()" [maxCount]="product.count" [minCount]="1" (decrease)="onDecrease()" (increase)="onIncrease()"></app-counter>
