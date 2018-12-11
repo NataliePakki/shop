@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { OrderRoutingModule } from './order-routing.module';
 
-import { ShipmentComponent, OrderItemComponent, OrderItemsComponent, SuccessPageComponent } from './components';
+import { ShipmentComponent, SuccessPageComponent } from './components';
 import { OrderComponent } from './order.component';
 
 @NgModule({
@@ -16,6 +16,6 @@ import { OrderComponent } from './order.component';
     SharedModule,
     OrderRoutingModule
   ],
-  declarations: [ OrderComponent, ShipmentComponent, OrderItemsComponent, OrderItemComponent, SuccessPageComponent ]
+  declarations: [ OrderComponent, ShipmentComponent, SuccessPageComponent ]
 })
 export class OrderModule { }
