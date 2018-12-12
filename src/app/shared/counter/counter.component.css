@@ -1,0 +1,13 @@
+:host {
+  margin-left: 5px;
+}
+button {
+  outline: none;
+}
+.count {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+[disabled] {
+  filter:opacity(.2);
+}

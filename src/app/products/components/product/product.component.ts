@@ -1,13 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Product } from '@products/models/product.model';
 import { ProductsReviewsService } from '@core/services';
+import { Review } from '@products/models/review';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;

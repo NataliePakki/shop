@@ -1,69 +1,54 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { ProductModel, Product } from '@products/models/product.model';
-import { Category } from '@products/models/category.enum';
+import { Observable } from 'rxjs';
+
+import { Product } from '@products/models/product.model';
 import { CoreModule } from '@core/core.module';
-
-const products: Product[] = [
-  new ProductModel('2', 'Nexus 7', '7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G', 300, Category.Phones, 2,
-      'https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png'),
-  new ProductModel('3', 'Nexus 6', '5.96 IPS (1440 x 2560), Android, Memory 3 GB,  32 GB, 3G', 350,
-      Category.Phones, 2,
-     'https://upload.wikimedia.org/wikipedia/commons/4/40/Nexus_6.png')
-];
-
-const productsPromise = Promise.resolve(products);
+import { HttpService } from '@shared/services/http-service.service';
+import { productsAPI } from 'assets/app.config';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class ProductsService {
-
-  constructor() {}
-
-  getAll(): Promise<Product[]> {
-    return productsPromise;
+  private httpService: HttpService;
+  constructor(@Inject(productsAPI) private productsUrl, httpClient: HttpClient) {
+    this.httpService = new HttpService(httpClient);
+    this.httpService.setBaseUrl(this.productsUrl);
+  }
+  getAll(): Observable<Product[]> {
+    return this.httpService.getAll<Product>();
   }
 
   get(id: string): Promise<Product> {
-    return this.getAll().then(tasks => tasks.find((product) => product.id === id));
+    return this.httpService.get<Product>(id);
   }
 
-  add(product: Product, count?: number): void {
-    count = count || product.count || 1;
-    product.count = count;
-    products.push(product);
+  add(product: Product, count?: number): Promise<Product> {
+    const newProduct = {...product, count: count || product.count || 1 };
+    return this.httpService.post<Product>(newProduct);
   }
 
-  update(product: Product): void {
-    const i = products.findIndex(o => o.id === product.id);
-    product.lastUpdated = new Date();
-    if (i > -1) {
-      products.splice(i, 1, product);
-    }
+  update(product: Product): Promise<Product> {
+    return this.httpService.put<Product>(product);
   }
 
-  decreaseCount(id: string, count?: number): void {
-    this.adjustCount(id, -count || -1);
+  decreaseCount(id: string, count?: number): Promise<Product> {
+    return this.adjustCount(id, -count || -1);
   }
 
-  increaseCount(id: string, count?: number): void {
-    this.adjustCount(id, count || 1);
+  increaseCount(id: string, count?: number): Promise<Product> {
+    return this.adjustCount(id, count || 1);
   }
 
-  adjustCount(id: string, count: number) {
-    const index = products.findIndex((product => product.id === id));
-    if (index > -1) {
-      products[index].lastUpdated = new Date();
-      products[index].count += count;
-    }
+  adjustCount(id: string, count: number): Promise<Product> {
+    return this.get(id).then(product => {
+      return this.update({...product, lastUpdated: new Date(), count: +product.count + count });
+    });
   }
 
-  remove(id: string): void {
-    const i = products.findIndex(p => p.id === id);
-
-    if (i > -1) {
-      products.splice(i, 1);
-    }
+  remove(item: Product): Promise<Product> {
+    return this.httpService.delete(item);
   }
 }

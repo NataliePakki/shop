@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, } from '@angular/router';
 
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { ProductsService, ProductsReviewsService } from '@core/services';
 import { Review } from '@products/models/review';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-reviews',
@@ -11,7 +13,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./product-reviews.component.css']
 })
 export class ProductReviewsComponent implements OnInit {
-  public reviews: Review[] = [];
+  public reviews$: Promise<Review[]>;
   public name: string;
 
   constructor(
@@ -25,7 +27,7 @@ export class ProductReviewsComponent implements OnInit {
     this.route.params.pipe(
       switchMap((params) => this.productsService.get(params.productID)))
     .subscribe((product) => {
-      this.reviews = this.reviewsService.get(product.id);
+      this.reviews$ = this.reviewsService.get(product.id);
       this.name = product.name;
     });
   }

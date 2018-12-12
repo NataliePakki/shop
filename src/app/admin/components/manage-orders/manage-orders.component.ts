@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Order, OrderState } from '@order/models/order.model';
 import { OrdersService } from '@core/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-manage-orders',
@@ -9,7 +10,7 @@ import { OrdersService } from '@core/services';
   styleUrls: ['./manage-orders.component.css']
 })
 export class ManageOrdersComponent implements OnInit {
-  orders: Order[];
+  orders$: Observable<Order[]>;
   orderStates = Object.keys(OrderState);
 
   constructor(
@@ -17,6 +18,7 @@ export class ManageOrdersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.orders$ = this.ordersService.getAll();
   }
 
   onOrderStatusChanged(id: string, state: OrderState) {
@@ -24,6 +26,13 @@ export class ManageOrdersComponent implements OnInit {
       order.state = state;
       this.ordersService.update(order);
     });
+  }
+  onDeleteOrder(order: Order) {
+    if (window.confirm('Are you sure?')) {
+      this.ordersService.remove(order).then(() => {
+        this.orders$ = this.ordersService.getAll();
+      });
+    }
   }
 
 }

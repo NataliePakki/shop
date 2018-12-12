@@ -13,7 +13,7 @@ const routes: Routes = [
     canActivate: [ OrderGuard ],
     children: [
       {
-        path: 'checkout/:orderID',
+        path: 'checkout',
         component: ShipmentComponent,
         canDeactivate: [ CanDeactivateGuard ],
         data: { title: 'CheckOut' }

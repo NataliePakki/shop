@@ -1,44 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 
 import { Review } from '@products/models/review';
 import { CoreModule } from '@core/core.module';
+import { ordersAPI, reviewsAPI } from 'assets/app.config';
+import { HttpService } from '@shared/services/http-service.service';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class ProductsReviewsService {
-  private reviews: Review[] = [
-    new Review('2', 'some anonimus', 'very good', 5, new Date()),
-    new Review('3', 'batman', 'good', 4, new Date()),
-    new Review('2', 'spy', 'bad', 2, new Date())
-  ];
-  constructor() { }
+  private httpService: HttpService;
 
-  getAll(): Review[] {
-    return this.reviews;
+  constructor(@Inject(reviewsAPI) reviewsUrl: string, httpClient: HttpClient) {
+    this.httpService = new HttpService(httpClient);
+    this.httpService.setBaseUrl(reviewsUrl);
   }
 
-  get(productId: string): Review[] | null {
-    return this.reviews.filter(r => r.productId === productId);
+  getAll(): Observable<Review[]> {
+    return this.httpService.getAll<Review>();
+  }
+
+  get(productId: string): Promise<Review[]> {
+    return this.getAll().toPromise().then(reviews => reviews.filter(r => r.productId === productId));
   }
 
   add(review: Review): void {
-    this.reviews.push(review);
+    this.httpService.post<Review>(review);
   }
 
   update(review: Review): void {
-    const i = this.reviews.findIndex(o => o.id === review.id);
-
-    if (i > -1) {
-      this.reviews.splice(i, 1, review);
-    }
+    this.httpService.put<Review>(review);
   }
 
-  remove(id: string): void {
-    const i = this.reviews.findIndex(p => p.productId === id);
-
-    if (i > -1) {
-      this.reviews.splice(i, 1);
-    }
+  remove(review: Review): void {
+    this.httpService.delete<Review>(review);
   }
 }

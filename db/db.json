@@ -1,0 +1,110 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Nexus 7",
+      "description": "7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G",
+      "price": 300,
+      "category": "Phones",
+      "count": 4,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png",
+      "lastUpdated": "2018-12-11T19:41:59.668Z"
+    },
+    {
+      "id": "2",
+      "name": "Nexus 6",
+      "description": "5.96 IPS (1440 x 2560), Android, Memory 3 GB,  32 GB, 3G",
+      "price": 350,
+      "category": "Phones",
+      "count": 1,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/40/Nexus_6.png",
+      "lastUpdated": "2018-12-11T19:41:59.666Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "1",
+      "productId": "2",
+      "author": "some anonimus",
+      "text": "very good",
+      "star": 5,
+      "createdDate": "2018-12-11T18:34:59.104Z"
+    },
+    {
+      "id": "2",
+      "productId": "2",
+      "author": "batman",
+      "text": "good",
+      "star": 4,
+      "createdDate": "2018-12-11T18:34:59.104Z"
+    },
+    {
+      "id": "3",
+      "productId": "1",
+      "author": "spy",
+      "text": "bad",
+      "star": 2,
+      "createdDate": "2018-12-11T18:34:59.104Z"
+    }
+  ],
+  "orders": [
+    {
+      "products": [],
+      "subtotal": 300,
+      "shipmentDate": {
+        "name": "Natalia Kravchenia",
+        "address": "Лещинского",
+        "phone": "293858938",
+        "email": "natalie.pakki@gmail.com"
+      },
+      "state": "Shipped",
+      "id": "9a029372-04c4-41ad-9763-b4d9eea67899"
+    },
+    {
+      "products": [
+        {
+          "id": "1",
+          "name": "Nexus 7",
+          "description": "7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G",
+          "price": 300,
+          "category": "Phones",
+          "count": 2,
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png",
+          "lastUpdated": "2018-12-11T18:33:30.819Z"
+        }
+      ],
+      "subtotal": 600,
+      "shipmentDate": {
+        "name": "Natalia Kravchenia",
+        "address": "Лещинского",
+        "phone": "293858938",
+        "email": "natalie.pakki@gmail.com"
+      },
+      "state": "Submitted",
+      "id": "1c762da7-0d20-481b-ab9b-6b023c62d83c"
+    },
+    {
+      "products": [
+        {
+          "id": "1",
+          "name": "Nexus 7",
+          "description": "7.0 IPS (1280x800), Android, Memory 1 GB,  32 GB, 3G",
+          "price": 300,
+          "category": "Phones",
+          "count": 2,
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Nexus_7_%282013%29.png",
+          "lastUpdated": "2018-12-11T18:39:10.746Z"
+        }
+      ],
+      "subtotal": 600,
+      "shipmentDate": {
+        "name": "Natalia Kravchenia",
+        "address": "Лещинского",
+        "phone": "293858938",
+        "email": "natalie.pakki@gmail.com"
+      },
+      "state": "Submitted",
+      "id": "a24740c0-0695-4af0-8ebf-4f79de3a0fa7"
+    }
+  ]
+}

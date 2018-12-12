@@ -9,10 +9,11 @@
 
       <th scope="col">Subtotal</th>
       <th scope="col">State</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let order of (ordersService.getAll() | async)">
+    <tr *ngFor="let order of (orders$ | async)">
         <td>{{ order.shipmentDate.name }}</td>
         <td>{{ order.shipmentDate.address }}</td>
         <td>{{ order.shipmentDate.phone }}</td>
@@ -32,6 +33,9 @@
                   <mat-option *ngFor="let st of orderStates" [value]="st">{{ st }}</mat-option>
                 </mat-select>
               </mat-form-field>
+        </td>
+        <td>
+          <button mat-button (click)="onDeleteOrder(order)">Delete</button>
         </td>
       </tr>
 

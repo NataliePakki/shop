@@ -1,5 +1,5 @@
 <li class="item">
-  <mat-card appHightlight class="item-card">
+  <mat-card class="item-card">
     <span class="name">{{ item.name }}</span>
     <app-counter [count]="getCount()" [maxCount]="item.maxCount" (decrease)="onDecrease()" (increase)="onIncrease()"></app-counter>
     <span class="delete" (click)="onDelete($event)"> X </span>

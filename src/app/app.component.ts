@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { AppSettingsService } from '@core/services';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
+    private appSetting: AppSettingsService,
     private router: Router,
     private titleService: Title,
   ) {}
 
   ngOnInit() {
     this.setPageTitles();
+    console.log('setting: ' + this.appSetting.getSetting());
   }
 
   ngOnDestroy() {

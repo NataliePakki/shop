@@ -1,4 +1,4 @@
 <h3>{{ name | titlecase }} reviews:</h3> <a class="close" (click)="onClose()">X</a>
 <ul class="u-listReset reviews-grid">
-    <app-product-review *ngFor="let review of reviews" [review]="review"></app-product-review>
+    <app-product-review *ngFor="let review of ( reviews$ | async )" [review]="review"></app-product-review>
 </ul>

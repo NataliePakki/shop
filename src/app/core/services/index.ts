@@ -4,3 +4,4 @@ export * from './products.service';
 export * from './local-storage.service';
 export * from './products-reviews.service';
 export * from './orders.service';
+export * from './app-settings.service';

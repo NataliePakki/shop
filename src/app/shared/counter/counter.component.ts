@@ -2,26 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
-  template: `
-  <button (click)="onDecrease()" [disabled]="isDecreaseDisabled()" class="badge badge-light">-</button>
-    <span class="count badge badge-secondary">{{count}}</span>
-  <button (click)="onIncrease()" [disabled]="isIncreaseDisabled()" class="badge badge-light">+</button>
-  `,
-  styles: [`
-    :host {
-      margin-left: 5px;
-    }
-    button {
-      outline: none;
-    }
-    .count {
-      margin-left: 5px;
-      margin-right: 5px;
-    }
-    [disabled] {
-      filter:opacity(.2);
-    }
-  `]
+  templateUrl: './counter.component.html',
+  styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
   @Output() increase = new EventEmitter();

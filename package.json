@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
+    "start-server": "json-server --watch db\/db.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -36,6 +37,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "concurrently": "^4.1.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^3.1.1",

@@ -28,9 +28,7 @@ export class CartComponent implements OnInit, OnDestroy {
   onSubmit($event: any) {
     $event.target.disabled = true;
     this.cartService.toggleSubmit();
-    const newOrder = this.createNewOrder();
-    this.ordersService.add(newOrder);
-    this.router.navigate(['checkout', newOrder.id]);
+    this.router.navigate(['checkout']);
   }
 
   onDelete(id: string) {
@@ -71,19 +69,5 @@ export class CartComponent implements OnInit, OnDestroy {
 
   getSubtotal(): number {
     return this.cartService.getSubtotal();
-  }
-
-  private createNewOrder(): Order {
-    const products = [];
-    this.cartService.getAll().forEach((item) => {
-      this.productsService.get(item.id)
-      .then(pr =>  {
-          const product = {...pr};
-          product.count = item.count;
-          products.push(product);
-      });
-    });
-
-    return new Order(products, this.cartService.getSubtotal());
   }
 }

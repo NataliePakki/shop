@@ -1,5 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OrdersAPIProvider, ProductsAPIProvider, ReviewAPIProvider } from 'assets/app.config';
 
 @NgModule({
   imports: [
@@ -8,6 +9,9 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   exports: [],
   providers: [
+    OrdersAPIProvider,
+    ProductsAPIProvider,
+    ReviewAPIProvider
   ],
 })
 export class CoreModule {

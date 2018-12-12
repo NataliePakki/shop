@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
-import { CartService, OrdersService } from '@core/services';
+import { CartService, OrdersService, ProductsService } from '@core/services';
 import { Order, OrderState } from '@order/models/order.model';
 import { CanComponentDeactivate } from '@core/interfaces/can-component-deactivate.interface';
 
@@ -20,24 +19,19 @@ export class ShipmentComponent implements OnInit, OnDestroy, CanComponentDeactiv
   constructor(
     private cartService: CartService,
     private ordersService: OrdersService,
+    private productsService: ProductsService,
     private location: Location,
     private router: Router,
-    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.route.params.pipe(
-        switchMap((params: Params) => this.ordersService.get(params.orderID)))
-      .subscribe((order) => {
-        this.order = { ...order };
-        this.originalOrder = { ...order };
-    });
+    this.order = this.createNewOrder();
+    this.originalOrder = {...this.order};
   }
 
   ngOnDestroy() {
     if (this.order.state !== OrderState.Submitted) {
       this.cartService.toggleSubmit();
-      this.ordersService.remove(this.order.id);
     }
   }
 
@@ -61,7 +55,7 @@ export class ShipmentComponent implements OnInit, OnDestroy, CanComponentDeactiv
 
   onSubmit() {
     this.order.state = OrderState.Submitted;
-    this.ordersService.update(this.order);
+    this.ordersService.add(this.order);
     this.cartService.clear();
     this.router.navigate(['success-page']);
   }
@@ -69,5 +63,19 @@ export class ShipmentComponent implements OnInit, OnDestroy, CanComponentDeactiv
   onGoBack() {
     this.cartService.toggleSubmit();
     this.location.back();
+  }
+
+  private createNewOrder(): Order {
+    const products = [];
+    this.cartService.getAll().forEach((item) => {
+      this.productsService.get(item.id)
+      .then(pr =>  {
+          const product = {...pr};
+          product.count = item.count;
+          products.push(product);
+      });
+    });
+
+    return new Order(products, this.cartService.getSubtotal());
   }
 }

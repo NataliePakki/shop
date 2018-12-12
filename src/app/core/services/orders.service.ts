@@ -1,44 +1,39 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 
 import { Order } from '@order/models/order.model';
 import { CoreModule } from '@core/core.module';
-
-const orders: Order[] = [];
-const ordersPromise = Promise.resolve(orders);
+import { HttpService } from '@shared/services/http-service.service';
+import { ordersAPI } from 'assets/app.config';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class OrdersService {
-
-
-  constructor() { }
-
-  getAll(): Promise<Order[]> {
-    return ordersPromise;
+  private httpService: HttpService;
+  constructor(@Inject(ordersAPI) private ordersUrl, httpClient: HttpClient) {
+    this.httpService = new HttpService(httpClient);
+    this.httpService.setBaseUrl(this.ordersUrl);
+  }
+  getAll(): Observable<Order[]> {
+    return this.httpService.getAll<Order>();
   }
 
   get(id: string): Promise<Order> {
-    return this.getAll().then(products => products.find((product) => product.id === id));
+    return this.httpService.get<Order>(id);
   }
 
-  add(order: Order): void {
-    orders.push(order);
+  add(order: Order): Promise<Order> {
+    return this.httpService.post<Order>(order);
   }
 
-  update(order: Order): void {
-    const i = orders.findIndex(o => o.id === order.id);
-
-    if (i > -1) {
-      orders.splice(i, 1, order);
-    }
+  update(order: Order): Promise<Order> {
+    return this.httpService.put<Order>(order);
   }
 
-  remove(id: string): void {
-    const i = orders.findIndex(p => p.id === id);
-
-    if (i > -1) {
-      orders.splice(i, 1);
-    }
+  remove(item: Order): Promise<Order> {
+    return this.httpService.delete(item);
   }
 }

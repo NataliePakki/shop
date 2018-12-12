@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of (productsService.getAll() | async)">
+    <tr *ngFor="let product of (products$ | async)">
         <td>{{ product.name }}</td>
         <td>{{ product.description }}</td>
         <td>{{ product.price | currency }}</td>
@@ -19,7 +19,7 @@
         <td>{{ product.category }}</td>
         <td>
           <button mat-button [routerLink]="['/edit', product.id]">Edit</button>
-          <button mat-button (click)="onDeleteProduct(product.id)">Delete</button>
+          <button mat-button (click)="onDeleteProduct(product)">Delete</button>
         </td>
       </tr>
 
