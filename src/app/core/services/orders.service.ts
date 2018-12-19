@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Order } from '@order/models/order.model';
-import { CoreModule } from '@core/core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 import { HttpService } from '@shared/services/http-service.service';
 import { ordersAPI } from 'assets/app.config';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class OrdersService {
   private httpService: HttpService;

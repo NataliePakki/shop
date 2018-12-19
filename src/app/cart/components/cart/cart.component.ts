@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { CartService, ProductsService, OrdersService } from '@core/services';
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import * as ProductsActions from '@store/products';
+import * as RouterActions from '@store/router';
+
+import { CartService } from '@core/services';
 import { Cart } from '@cart/models/cart.model';
-import { Router } from '@angular/router';
-import { Order } from '@order/models/order.model';
 
 @Component({
   selector: 'app-cart',
@@ -15,10 +18,8 @@ export class CartComponent implements OnInit, OnDestroy {
   public currOrderBy = 'name';
   public desc = true;
   constructor(
+    private store: Store<AppState>,
     public cartService: CartService,
-    private productsService: ProductsService,
-    private ordersService: OrdersService,
-    private router: Router,
   ) { }
 
   ngOnInit() {}
@@ -28,19 +29,19 @@ export class CartComponent implements OnInit, OnDestroy {
   onSubmit($event: any) {
     $event.target.disabled = true;
     this.cartService.toggleSubmit();
-    this.router.navigate(['checkout']);
+    this.store.dispatch(new RouterActions.Go({ path: ['checkout']}));
   }
 
   onDelete(id: string) {
     const item = this.cartService.get(id);
     const count = item.count;
     this.cartService.remove(id);
-    this.productsService.increaseCount(id, count);
+    this.store.dispatch(new ProductsActions.AdjustProductCount(id, count));
   }
 
   onAdjusted(item: Cart) {
     this.cartService.adjustCount(item.id, item.count);
-    this.productsService.adjustCount(item.id, -item.count);
+    this.store.dispatch(new ProductsActions.AdjustProductCount(item.id, -item.count));
   }
 
   onOrderByChanged(orderByValue: string) {
@@ -58,7 +59,7 @@ export class CartComponent implements OnInit, OnDestroy {
   clear(event: any) {
     event && event.preventDefault();
     this.cartService.getAll().forEach(item => {
-      this.productsService.adjustCount(item.id, item.count);
+      this.store.dispatch(new ProductsActions.AdjustProductCount(item.id, item.count));
     });
     this.cartService.clear();
   }

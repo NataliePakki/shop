@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
-import { CartService, OrdersService, ProductsService } from '@core/services';
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import * as OrderActions from '@store/orders/orders.actions';
+import * as RouterActions from '@store/router';
+
+import { CartService, ProductsService } from '@core/services';
 import { Order, OrderState } from '@order/models/order.model';
 import { CanComponentDeactivate } from '@core/interfaces/can-component-deactivate.interface';
 
@@ -17,11 +20,9 @@ export class ShipmentComponent implements OnInit, OnDestroy, CanComponentDeactiv
   originalOrder: Order;
 
   constructor(
+    private store: Store<AppState>,
     private cartService: CartService,
-    private ordersService: OrdersService,
     private productsService: ProductsService,
-    private location: Location,
-    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -55,14 +56,13 @@ export class ShipmentComponent implements OnInit, OnDestroy, CanComponentDeactiv
 
   onSubmit() {
     this.order.state = OrderState.Submitted;
-    this.ordersService.add(this.order);
+    this.store.dispatch(new OrderActions.CreateOrder(this.order));
     this.cartService.clear();
-    this.router.navigate(['success-page']);
   }
 
   onGoBack() {
     this.cartService.toggleSubmit();
-    this.location.back();
+    this.store.dispatch(new RouterActions.Back());
   }
 
   private createNewOrder(): Order {

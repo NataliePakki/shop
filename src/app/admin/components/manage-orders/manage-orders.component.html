@@ -29,7 +29,7 @@
         <td>{{ order.subtotal | currency }}</td>
         <td>
             <mat-form-field>
-                <mat-select [(value)]="order.state" (selectionChange)="onOrderStatusChanged(order.id, order.state)">
+                <mat-select [(value)]="order.state" (selectionChange)="onOrderStatusChanged(order, order.state)">
                   <mat-option *ngFor="let st of orderStates" [value]="st">{{ st }}</mat-option>
                 </mat-select>
               </mat-form-field>

@@ -2,10 +2,10 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 
 import { Cart } from '@cart/models/cart.model';
 import { LocalStorageService } from './local-storage.service';
-import { CoreModule } from '@core/core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class CartService implements OnInit, OnDestroy {
   private submitted = false;

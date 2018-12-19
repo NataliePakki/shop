@@ -3,11 +3,11 @@ import { CanDeactivate } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
-import { CoreModule } from '../core.module';
 import { CanComponentDeactivate } from './../interfaces/can-component-deactivate.interface';
+import { CoreServicesModule } from '@core/core-services.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
   canDeactivate(component: CanComponentDeactivate): Observable<boolean> | Promise<boolean> | boolean {

@@ -1,4 +1,5 @@
 <h4>Products</h4>
+<p *ngIf="(productsError$ | async) as value">{{value}}</p>
 <ul class="u-listReset product-grid">
-  <app-product *ngFor="let product of products$ | async" [product]="product" [reviewsCount]="[reviewsCount(product.id)]" (reviewOpened)="onReviewOpened($event)" (bought)="onBuy($event)"></app-product>
+  <app-product *ngFor="let product of (products$ | async)" [product]="product" [reviewsCount]="[reviewsCount(product.id)]" (reviewOpened)="onReviewOpened($event)" (bought)="onBuy($event)"></app-product>
 </ul>

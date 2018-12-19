@@ -1,9 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { Product } from '@products/models/product.model';
-import { ProductsReviewsService } from '@core/services';
-import { Review } from '@products/models/review';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +22,7 @@ export class ProductComponent implements OnInit {
 
   onBuy(event: any) {
     event && event.preventDefault();
-    this.bought.emit({ id: this.product.id, count: this.count });
+    this.bought.emit({ product: this.product, count: this.count });
     this.count = 1;
   }
 

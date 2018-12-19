@@ -1,53 +1,63 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-import { ProductsService, CartService, ProductsReviewsService } from '@core/services';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import { getProductsReviewsData } from '@store/products-reviews';
+import * as ProductsActions from '@store/products/products.actions';
+import * as ProductsReviewsActions from '@store/products-reviews/products-reviews.actions';
+import * as RouterActions from '@store/router';
+
+import { CartService } from '@core/services';
+import { Review } from '@products/models/review';
 import { CartModel } from '@cart/models/cart.model';
 import { Product } from '@products/models/product.model';
-import { Review } from '@products/models/review';
-import { filter } from 'rxjs/operators';
+import { AutoUnsubscribe } from '@core/decorators/auto-unsubscribe.decorator';
+import { getProductsData, getProductsError } from '@core/+store/products';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
+@AutoUnsubscribe()
 export class ProductsComponent implements OnInit, OnDestroy {
-  reviews: Review[];
-  products$: Observable<Product[]>;
+  reviews: Array<Review>;
+  products$: Observable<ReadonlyArray<Product>>;
+  productsError$: Observable<Error | string>;
+  private sub: Subscription;
 
   constructor(
-    public productService: ProductsService,
-    public reviewsService: ProductsReviewsService,
+    private store: Store<AppState>,
     private cartService: CartService,
-    private router: Router) {}
+  ) {}
 
   ngOnInit() {
-    this.products$ = this.productService.getAll();
-    this.reviewsService.getAll().subscribe((reviews) => {
-      this.reviews = reviews;
+    this.products$ = this.store.pipe(select(getProductsData));
+    this.productsError$ = this.store.pipe(select(getProductsError));
+    this.sub = this.store.pipe(select(getProductsReviewsData)).subscribe(reviews => {
+      this.reviews = <Array<Review>>reviews;
     });
+
+    this.store.dispatch(new ProductsActions.GetProducts());
+    this.store.dispatch(new ProductsReviewsActions.GetProductsReviews());
   }
 
   ngOnDestroy() {
-    this.router.navigate(['/', { outlets: { reviews: null } }]);
+    this.store.dispatch(new RouterActions.Go({ path: ['/', { outlets: { reviews: null } } ]}));
   }
 
-  onBuy(value: Product) {
-    this.productService.get(value.id).then((pr) => {
-      if (pr && pr.count > 0) {
-        this.cartService.add(new CartModel(pr.id, pr.name, pr.price, value.count, pr.count));
-        this.productService.decreaseCount(value.id, value.count).then(() => {
-          this.products$ = this.productService.getAll();
-        });
-      }
-    });
+  onBuy(value: any) {
+    console.log(value.product + ' - ' + value.count);
+    const product = value.product;
+    const count = value.count;
+    this.store.dispatch(new ProductsActions.AdjustProductCount(product.id, -count));
+    this.cartService.add(new CartModel(product.id, product.name, product.price, count, product.count));
   }
 
   onReviewOpened(id: string) {
-    this.router.navigate([{ outlets: { reviews: [ id ] } }]);
+    this.store.dispatch(new RouterActions.Go({ path: [{ outlets: { reviews: [ id ] } }]}));
   }
 
   reviewsCount(productId: string): number {

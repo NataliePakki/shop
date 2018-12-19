@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Product } from '@products/models/product.model';
-import { CoreModule } from '@core/core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 import { HttpService } from '@shared/services/http-service.service';
 import { productsAPI } from 'assets/app.config';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class ProductsService {
   private httpService: HttpService;
@@ -32,14 +32,6 @@ export class ProductsService {
 
   update(product: Product): Promise<Product> {
     return this.httpService.put<Product>(product);
-  }
-
-  decreaseCount(id: string, count?: number): Promise<Product> {
-    return this.adjustCount(id, -count || -1);
-  }
-
-  increaseCount(id: string, count?: number): Promise<Product> {
-    return this.adjustCount(id, count || 1);
   }
 
   adjustCount(id: string, count: number): Promise<Product> {

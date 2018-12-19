@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route,
-    ActivatedRouteSnapshot, RouterStateSnapshot, Router, NavigationExtras } from '@angular/router';
+    ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import * as RouterActions from '@store/router';
+
 import { AuthService } from './../services/auth.service';
-import { CoreModule } from '../core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad  {
   constructor(
+    private store: Store<AppState>,
     private authService: AuthService,
-    private router: Router
   ) {}
 
   canActivate(
@@ -37,7 +42,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad  {
 
     this.authService.redirectUrl = url;
 
-    this.router.navigate(['/login']);
+    this.store.dispatch(new RouterActions.Go({ path: ['/login'] }));
     return false;
   }
 }

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CoreModule } from '@core/core.module';
-import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
+
+import { LocalStorageService } from './local-storage.service';
+import { CoreServicesModule } from '@core/core-services.module';
 
 const defaultSetting = {
   appVersion: '1.0'
 };
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class AppSettingsService {
   private settings;

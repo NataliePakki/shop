@@ -1,54 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
-import { Product, ProductModel } from '@products/models/product.model';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import { getSelectedProductByUrl  } from '@store/products';
+import * as ProductsActions from '@store/products/products.actions';
+import * as RouterActions from '@store/router';
+
+import { Product } from '@products/models/product.model';
 import { Category } from '@products/models/category.enum';
-import { ProductsService } from '@core/services';
+import { AutoUnsubscribe } from '@core/decorators/auto-unsubscribe.decorator';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
+@AutoUnsubscribe()
 export class ProductFormComponent implements OnInit {
+  private sub: Subscription;
   product: Product;
   categories = Object.keys(Category);
 
   constructor(
-    private productsService: ProductsService,
-    private location: Location,
-    private route: ActivatedRoute
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
-    this.product = new ProductModel();
-
-    this.route.paramMap
-      .pipe(
-        switchMap((params: Params) => this.productsService.get(params.get('productID'))))
-      .subscribe(
-        product => this.product = {...product},
-        err => console.log(err)
-    );
+   this.sub = this.store
+      .pipe(select(getSelectedProductByUrl))
+      .subscribe(product => this.product = product);
   }
 
   onSaveProduct() {
     const product = { ...this.product };
 
     if (product.id) {
-      this.productsService.update(product);
+      product.lastUpdated = new Date();
+      this.store.dispatch(new ProductsActions.UpdateProduct(product));
+      this.store.dispatch(new RouterActions.Go({ path: ['/admin', 'products'] }));
     } else {
-      this.productsService.add(product);
+      this.store.dispatch(new ProductsActions.CreateProduct(product));
     }
-
-    this.location.back();
   }
 
   onGoBack() {
-    this.location.back();
+    this.store.dispatch(new RouterActions.Back());
   }
 
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { CoreModule } from '@core/core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class LocalStorageService {
 

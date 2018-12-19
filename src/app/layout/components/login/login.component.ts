@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import * as RouterActions from '@store/router';
 
 import { AuthService } from '@core/services';
 
@@ -16,8 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
 
   constructor(
+    private store: Store<AppState>,
     public authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,12 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
          this.setMessage();
          if (this.authService.isLoggedIn) {
           const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin';
-          const navigationExtras: NavigationExtras = {
-            queryParamsHandling: 'preserve',
-            preserveFragment: true
-          };
-          // Redirect the user
-          this.router.navigate([redirect], navigationExtras);
+          this.store.dispatch(new RouterActions.Go({ path: [redirect]}));
       }
     },
         err => console.log(err)

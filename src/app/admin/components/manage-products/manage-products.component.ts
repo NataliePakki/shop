@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ProductsService } from '@core/services';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@core/+store';
+import { getProductsData, getProductsError } from '@store/products';
+import * as ProductsActions from '@store/products/products.actions';
+
 import { Product } from '@products/models/product.model';
 
 @Component({
@@ -11,20 +15,22 @@ import { Product } from '@products/models/product.model';
   styleUrls: ['./manage-products.component.css']
 })
 export class ManageProductsComponent implements OnInit {
-  products$: Observable<Product[]>;
+  products$: Observable<ReadonlyArray<Product>>;
+  productsError$: Observable<Error | string>;
+
   constructor(
-    public productsService: ProductsService
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
-    this.products$ = this.productsService.getAll();
+    this.products$ = this.store.pipe(select(getProductsData));
+    this.productsError$ = this.store.pipe(select(getProductsError));
+    this.store.dispatch(new ProductsActions.GetProducts());
   }
 
   onDeleteProduct(product: Product) {
     if (window.confirm('Are you sure?')) {
-      this.productsService.remove(product).then(() => {
-        this.products$ = this.productsService.getAll();
-      });
+      this.store.dispatch(new ProductsActions.DeleteProduct(product));
     }
   }
 }

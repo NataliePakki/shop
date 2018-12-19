@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
-import { CoreModule } from '../core.module';
+import { CoreServicesModule } from '@core/core-services.module';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: CoreServicesModule
 })
 export class AuthService {
   isLoggedIn = false;
