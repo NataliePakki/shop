@@ -12,6 +12,7 @@ export enum  OrderState {
 
 export class Order {
   id: string;
+  notification: string;
 
   constructor(
     public products: Product[],
